@@ -1,0 +1,84 @@
+<div class="container">
+  <div *ngIf="tela == 'cadastro'">
+    <form #cadastro="ngForm" (submit)="salvar()">
+    <h4>Cadastro de Notícias</h4>
+    <div class="form-group">
+      <label for="titulo">Título</label>
+      <input class="form-control" type="text" id="titulo" name="titulo" [(ngModel)]="titulo" required>
+    </div>
+
+    <div class="form-group">
+      <label for="conteudo">Conteúdo</label>
+      <textarea class="form-control" id="conteudo" name="conteudo" cols="80" rows="5" [(ngModel)]="conteudo" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="autor">Autor</label>
+      <input class="form-control" type="text" name="autor" id="autor" [(ngModel)]="autor" required>
+    </div>
+
+    <div class="form-group">
+      <label for="emailDoAutor">E-mail do autor</label>
+      <input class="form-control" type="email" name="emailDoAutor" id="emailDoAutor" [(ngModel)]="emailDoAutor">
+    </div>
+
+    <div class="form-group">
+      <label for="data">Data</label>
+      <input class="form-control" type="datetime-local" name="data" id="data" [(ngModel)]="data">
+    </div>
+    <div>
+      <button type="submit" (click)="irTelaInicial()" [disabled]="!cadastro.form.valid" class="btn btn-success">Salvar</button> 
+      <button type="reset" *ngIf="tela == 'cadastro'" formnovalidate>Limpar</button>
+      <button *ngIf="tela == 'edicao'" (click)="cancelarEdicao()" formnovalidate>Cancelar</button>
+    </div>
+    </form>
+  </div>
+
+  <div *ngIf="tela == 'tela-inicial'">
+    <h4>Br Notícias</h4>
+    <div *ngFor="let noticia of noticias">
+      <h4>{{ noticia.titulo }}</h4>
+      <h6>{{noticia.autor}}</h6>
+    </div>
+    <button (click)="irTelaCadastro()" class="btn btn-success">Cadastrar</button> 
+    <button (click)="irTelaPublicar()" class="btn btn-primary">Publicar</button>  
+    <button (click)="irTelaEstatisticas()" class="btn btn-info">Estatística</button>
+  </div>
+
+  <div *ngIf="tela == 'tela-publicar'">
+    <h4>Lista de Notícias Salvas</h4>
+  </div>
+
+  <div *ngIf="tela == 'tela-visualizar-noticias'">
+    <table>
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Título</th>
+        <th scope="col">Autor</th>
+        <th scope="col">Publicada</th>
+        <th scope="col">Ações</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let noticia of noticias">
+        <td>{{ noticia.id }}</td>
+        <td>{{ noticia.titulo }}</td>
+        <td>{{ noticia.autor }}</td>
+        <td>{{ noticia.data }}</td>
+        <td>
+          <button (click)="editar(noticia)">Editar</button> |
+          <button (click)="excluir(noticia)">Excluir</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="tela == 'tela-estatisticas'">
+    <h4>Br Notícias</h4>
+    <h5>Estatísticas</h5>
+  </div>
+  
+
+</div>
